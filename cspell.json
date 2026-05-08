@@ -1,0 +1,12 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": [
+    "mapbox", "Mapbox", "geospatial", "Geospatial", "Firestore", "firestore",
+    "Riverpod", "riverpod", "Geolocator", "geolocator", "hexrun", "HexRun",
+    "pubspec", "flutterfire", "GoRouter", "gorouter", "BaaS",
+    "firebaseapp", "appspot", "RRGGBB", "Uncompact", "uncompact",
+    "rxdart", "mocktail", "dists"
+  ],
+  "ignorePaths": ["node_modules", ".git", "build", "functions"]
+}
