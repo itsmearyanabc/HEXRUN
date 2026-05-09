@@ -25,8 +25,30 @@ class GameConstants {
   /// Minimum displacement to register (meters)
   static const double minDisplacementM = 5.0;
 
-  /// Maximum GPS accuracy to accept (meters)
+  /// Maximum GPS accuracy for strict / server-side logic (meters)
   static const double gpsAccuracy = 10.0;
+
+  /// Looser accuracy for live map and UX (many devices report 15–40m on first fix)
+  static const double gpsAccuracyLoose = 40.0;
+
+  // --- Loop capture (closed route → territory) ---
+  /// GPS points must be at least this far apart to extend the active loop trace
+  static const double routeMinSegmentM = 4.0;
+
+  /// Distance from latest point back to the start point to count as "closed"
+  static const double loopClosingRadiusM = 38.0;
+
+  /// Minimum perimeter (sum of segments + closing gap) to claim a loop
+  static const double minLoopPerimeterM = 120.0;
+
+  /// Minimum vertices in the loop polyline
+  static const int minLoopVertices = 4;
+
+  /// Ignore another auto-capture for this long after one fires (noise near start)
+  static const int loopCaptureCooldownMs = 12000;
+
+  /// Max GPS points kept per active session (memory / map performance)
+  static const int maxRoutePoints = 4000;
 
   // --- Anti-Cheat ---
   /// Maximum speed before flagging as cheat (km/h)

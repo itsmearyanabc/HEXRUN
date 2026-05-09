@@ -30,23 +30,30 @@ class ValidatedPosition {
 /// Location service handling GPS tracking with anti-cheat validation
 class LocationService {
   StreamSubscription<Position>? _positionSubscription;
+  StreamController<ValidatedPosition>? _trackingController;
   Position? _lastPosition;
 
+  /// Live updates for runs. Does not request permission — call [requestPermissions] first.
   Stream<ValidatedPosition> startTracking() {
+    stopTracking();
     final controller = StreamController<ValidatedPosition>.broadcast();
+    _trackingController = controller;
     _positionSubscription = Geolocator.getPositionStream(
-      locationSettings: const LocationSettings(
+      locationSettings: LocationSettings(
         accuracy: LocationAccuracy.high,
-        distanceFilter: 5,
-        timeLimit: Duration(milliseconds: GameConstants.gpsIntervalMs),
+        distanceFilter: GameConstants.minDisplacementM.round(),
+        // Do not set timeLimit here: it causes periodic timeouts and a dead-looking map.
       ),
     ).listen(
       (position) {
         final validated = _validatePosition(position);
         if (validated.isValid) _lastPosition = position;
-        controller.add(validated);
+        if (!controller.isClosed) controller.add(validated);
       },
-      onError: (error) => debugPrint('GPS Error: $error'),
+      onError: (error) {
+        debugPrint('GPS Error: $error');
+        if (!controller.isClosed) controller.addError(error);
+      },
     );
     return controller.stream;
   }
@@ -54,6 +61,8 @@ class LocationService {
   void stopTracking() {
     _positionSubscription?.cancel();
     _positionSubscription = null;
+    _trackingController?.close();
+    _trackingController = null;
   }
 
   Future<ValidatedPosition> getCurrentPosition() async {
@@ -101,7 +110,10 @@ class LocationService {
   }
 
   ValidatedPosition _validatePosition(Position position) {
-    if (!GeoUtils.isAccuracyAcceptable(position.accuracy)) {
+    if (!GeoUtils.isAccuracyAcceptable(
+      position.accuracy,
+      maxAccuracy: GameConstants.gpsAccuracyLoose,
+    )) {
       return ValidatedPosition(
         latitude: position.latitude, longitude: position.longitude,
         accuracy: position.accuracy, speed: position.speed,

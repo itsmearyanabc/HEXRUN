@@ -41,6 +41,35 @@ class CaptureEngine {
       totalCaptured: capturedCells.length, xpEarned: totalXp, wasContested: contestedCells.isNotEmpty);
   }
 
+  /// Claim / contest all [cellIds] from a closed-loop capture (e.g. H3 polyfill).
+  CaptureResult captureFromCellIds({
+    required Iterable<String> cellIds,
+    required String playerId,
+    required Set<String> existingPlayerCells,
+    required Map<String, String> allOwnedCells,
+  }) {
+    final capturedCells = <String>[];
+    final contestedCells = <String>[];
+    for (final cell in cellIds.toSet()) {
+      if (!_h3Service.isValidCell(cell)) continue;
+      if (existingPlayerCells.contains(cell)) continue;
+      final currentOwner = allOwnedCells[cell];
+      if (currentOwner == null) {
+        capturedCells.add(cell);
+      } else if (currentOwner != playerId) {
+        contestedCells.add(cell);
+      }
+    }
+    final int totalXp = (capturedCells.length * GameConstants.xpPerCapture) + (contestedCells.length * GameConstants.xpPerContest);
+    return CaptureResult(
+      capturedCells: capturedCells,
+      contestedCells: contestedCells,
+      totalCaptured: capturedCells.length,
+      xpEarned: totalXp,
+      wasContested: contestedCells.isNotEmpty,
+    );
+  }
+
   /// Check if a player can capture a specific cell
   bool canCaptureCell({required String cellId, required String playerId, required Set<String> playerCells}) {
     if (playerCells.contains(cellId)) return true;

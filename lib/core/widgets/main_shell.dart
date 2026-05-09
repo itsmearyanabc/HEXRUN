@@ -35,7 +35,7 @@ class _BottomNav extends StatelessWidget {
       onDestinationSelected: (index) {
         switch (index) {
           case 0:
-            context.go('/map');
+            context.go('/');
             break;
           case 1:
             context.go('/leaderboard');

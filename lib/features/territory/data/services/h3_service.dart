@@ -1,5 +1,4 @@
 import 'package:h3_flutter/h3_flutter.dart';
-import 'package:h3_common/h3_common.dart';
 import '../../../../core/constants/h3_constants.dart';
 
 /// H3 geospatial indexing service for hex cell management
@@ -68,6 +67,18 @@ class H3Service {
       return _h3.h3Distance(bigIntA, bigIntB);
     } catch (_) {
       return -1;
+    }
+  }
+
+  /// H3 cells whose centers fall inside a closed geographic polygon (outer ring only).
+  List<String> cellsInsidePolygon(List<(double lat, double lng)> ring) {
+    if (ring.length < 3) return [];
+    try {
+      final coords = ring.map((e) => GeoCoord(lat: e.$1, lon: e.$2)).toList();
+      final cells = _h3.polyfill(coordinates: coords, resolution: H3Constants.resolution);
+      return cells.map((id) => id.toRadixString(16)).toSet().toList();
+    } catch (_) {
+      return [];
     }
   }
 }
