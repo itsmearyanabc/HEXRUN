@@ -290,7 +290,7 @@ class _MapTopBar extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(Icons.bolt_rounded, color: AppTheme.accent, size: 22),
+                const Icon(Icons.bolt_rounded, color: AppTheme.accent, size: 22),
                 const SizedBox(width: 8),
                 Text(
                   AppConfig.appName,

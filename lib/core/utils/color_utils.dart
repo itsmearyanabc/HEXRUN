@@ -12,7 +12,7 @@ class ColorUtils {
 
   /// Convert Flutter Color to hex string (#RRGGBB)
   static String colorToHex(Color color) {
-    return '#${color.value.toRadixString(16).substring(2).toUpperCase()}';
+    return '#${color.toARGB32().toRadixString(16).substring(2).toUpperCase()}';
   }
 
   /// Apply alpha to a hex color string, returns a Color
