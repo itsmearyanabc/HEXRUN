@@ -54,7 +54,7 @@ class _TerritoryOverlayWidgetState extends State<TerritoryOverlayWidget> {
       // Add fill layer if not exists
       if (!await style.styleLayerExists(_fillLayerId)) {
         final fillLayer = FillLayer(id: _fillLayerId, sourceId: _sourceId);
-        fillLayer.fillColor = Colors.blue.value;
+        fillLayer.fillColor = Colors.blue.toARGB32();
         fillLayer.fillOpacity = 0.35;
         await style.addLayer(fillLayer);
       }
@@ -62,7 +62,7 @@ class _TerritoryOverlayWidgetState extends State<TerritoryOverlayWidget> {
       // Add line layer if not exists
       if (!await style.styleLayerExists(_lineLayerId)) {
         final lineLayer = LineLayer(id: _lineLayerId, sourceId: _sourceId);
-        lineLayer.lineColor = Colors.white.value;
+        lineLayer.lineColor = Colors.white.toARGB32();
         lineLayer.lineWidth = 2.0;
         lineLayer.lineOpacity = 0.7;
         await style.addLayer(lineLayer);

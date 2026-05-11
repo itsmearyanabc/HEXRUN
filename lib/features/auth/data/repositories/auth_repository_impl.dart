@@ -204,7 +204,7 @@ class AuthRepositoryImpl implements AuthRepository {
       }
       await _googleSignIn.signOut();
       await _firebaseAuth.signOut();
-      return Right(null);
+      return const Right(null);
     } catch (e) {
       return Left(Failure.unknown(message: e.toString()));
     }
@@ -258,7 +258,7 @@ class AuthRepositoryImpl implements AuthRepository {
       }
       await _firestore.collection('users').doc(user.uid).delete();
       await user.delete();
-      return Right(null);
+      return const Right(null);
     } on firebase_auth.FirebaseAuthException catch (e) {
       if (e.code == 'requires-recent-login') {
         return Left(

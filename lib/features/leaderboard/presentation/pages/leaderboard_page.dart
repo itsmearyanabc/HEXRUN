@@ -45,7 +45,7 @@ class _RankBadge extends StatelessWidget {
   const _RankBadge({required this.rank});
   @override
   Widget build(BuildContext context) {
-    final color = rank == 1 ? Colors.amber : rank == 2 ? Colors.grey.shade400 : rank == 3 ? Colors.brown : Theme.of(context).colorScheme.surfaceVariant;
+    final color = rank == 1 ? Colors.amber : rank == 2 ? Colors.grey.shade400 : rank == 3 ? Colors.brown : Theme.of(context).colorScheme.surfaceContainerHighest;
     return CircleAvatar(
       backgroundColor: color.withAlpha(50),
       child: rank <= 3 ? Icon(Icons.emoji_events, color: color, size: 24) : Text('$rank', style: const TextStyle(fontWeight: FontWeight.bold)),
