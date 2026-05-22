@@ -1,4 +1,4 @@
-# HexRun 🏃‍♂️⬡
+# HexRun 🏃‍♂️⬡.....
 
 A location-based territory capture game built with Flutter. Run in the real world to capture hexagonal territories on the map!
 
