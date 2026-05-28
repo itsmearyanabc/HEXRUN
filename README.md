@@ -6,7 +6,7 @@ A location-based territory capture game built with Flutter. Run in the real worl
 
 - **🗺️ Mapbox Map** - Interactive map with hex territory overlay
 - **⬡ H3 Hex Grid** - Uber's H3 geospatial indexing for territory cells
-- **📍 GPS Tracking** - Real-time location tracking during runs
+- **📍 GPS Tracking** - Real-time location tracking during runs.
 - **🏆 Territory Capture** - Claim hexes by running through them
 - **📊 Leaderboard** - Compete with other players by XP and territory count
 - **👤 Profile** - Track your stats, level, and run history
